@@ -163,16 +163,11 @@ def get_file_paths_from_manifests_for_differential_backups(backups):
 
     manifests = list(map(lambda backup: json.loads(backup.manifest), differential_backups))
 
-    objects_in_manifests = [
-        obj
+    paths_in_manifest = {
+        "{}".format(obj['path'])
         for manifest in manifests
         for columnfamily_manifest in manifest
         for obj in columnfamily_manifest['objects']
-    ]
-
-    paths_in_manifest = {
-        "{}".format(obj['path'])
-        for obj in objects_in_manifests
     }
 
     return paths_in_manifest
